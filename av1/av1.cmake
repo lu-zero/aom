@@ -418,6 +418,10 @@ set(AOM_AV1_COMMON_INTRIN_NEON
     ${AOM_AV1_COMMON_INTRIN_NEON}
     "${AOM_ROOT}/av1/common/arm/cfl_neon.c")
 
+set(AOM_AV1_COMMON_INTRIN_VSX
+    ${AOM_AV1_COMMON_INTRIN_VSX}
+    "${AOM_ROOT}/av1/common/ppc/cfl_vsx.c")
+
 set(AOM_AV1_COMMON_SOURCES
     ${AOM_AV1_COMMON_SOURCES}
     "${AOM_ROOT}/av1/common/restoration.c"
@@ -584,6 +588,15 @@ function (setup_av1_targets)
                                     "neon"
                                     "aom_av1_encoder"
                                     "AOM_AV1_ENCODER_INTRIN_NEON" "aom")
+    endif ()
+  endif ()
+
+  if (HAVE_VSX)
+    if (AOM_AV1_COMMON_INTRIN_VSX)
+      add_intrinsics_object_library("-mvsx -maltivec"
+                                    "vsx"
+                                    "aom_av1_common"
+                                    "AOM_AV1_COMMON_INTRIN_VSX" "aom")
     endif ()
   endif ()
 
